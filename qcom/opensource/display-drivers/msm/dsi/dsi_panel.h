@@ -714,6 +714,9 @@ int dsi_panel_send_cmd(struct dsi_panel *panel,
 
 int dsi_panel_parse_freq_step_table(struct dsi_display_mode *mode,
 				struct dsi_parser_utils *utils);
+
+bool dsi_panel_param_is_supported(u32 param_idx);
+
 int dsi_panel_set_param(struct dsi_panel *panel,
 			struct msm_param_info *param_info);
 
