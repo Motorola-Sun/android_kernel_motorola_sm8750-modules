@@ -58,17 +58,15 @@ ifeq ($(CONFIG_ARCH_PARROT), y)
 include $(CAMERA_KERNEL_ROOT)/config/parrot.mk
 endif 
 
-ifneq (,$(filter hiphid hiphic hiphi hiphid_factory hiphic_factory hiphi_factory, $(TARGET_PRODUCT)))
+ifneq (,$(findstring hiphi, $(TARGET_PRODUCT)))
 include $(CAMERA_KERNEL_ROOT)/config/hiphi.mk
-else ifneq (,$(filter li li_factory, $(TARGET_PRODUCT)))
-include $(CAMERA_KERNEL_ROOT)/config/li.mk
-else ifneq (,$(filter oneli oneli_factory, $(TARGET_PRODUCT)))
+else ifneq (,$(findstring oneli, $(TARGET_PRODUCT)))
 include $(CAMERA_KERNEL_ROOT)/config/oneli.mk
-else ifneq (,$(filter eqs eqs_factory, $(TARGET_PRODUCT)))
+else ifneq (,$(findstring eqs, $(TARGET_PRODUCT)))
 include $(CAMERA_KERNEL_ROOT)/config/eqs.mk
-else ifneq (,$(filter rtwo rtwo_factory, $(TARGET_PRODUCT)))
+else ifneq (,$(findstring rtwo, $(TARGET_PRODUCT)))
 include $(CAMERA_KERNEL_ROOT)/config/rtwo.mk
-else ifneq (,$(filter roadstr roadstr_factory, $(TARGET_PRODUCT)))
+else ifneq (,$(findstring roadstr, $(TARGET_PRODUCT)))
 include $(CAMERA_KERNEL_ROOT)/config/roadstr.mk
 endif
 
