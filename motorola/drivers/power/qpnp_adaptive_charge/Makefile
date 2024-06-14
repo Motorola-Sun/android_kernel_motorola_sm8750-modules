@@ -1,3 +1,5 @@
+KBUILD_OPTIONS += CONFIG_USE_MMI_GLINK_CHARGER=y
+
 all: modules
 
 modules:
