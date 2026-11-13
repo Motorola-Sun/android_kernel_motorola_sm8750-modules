@@ -280,6 +280,7 @@ static const struct reg_dmn_op_class_map_t global_op_class[] = {
 	{136, 20, BW20, BIT(BEHAV_NONE), 5925,
 	 {2},
 	&CFISLST(136)},
+
 	{137, 320, BW20, BIT(BEHAV_NONE), 5950,
 	 {1, 5, 9, 13, 17, 21, 25, 29, 33, 37, 41,
 	  45, 49, 53, 57, 61, 65, 69, 73, 77, 81,
