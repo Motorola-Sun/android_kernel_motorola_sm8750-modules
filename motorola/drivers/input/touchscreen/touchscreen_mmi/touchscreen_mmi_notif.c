@@ -463,16 +463,28 @@ static void ts_mmi_worker_func(struct work_struct *w)
 				TRY_TO_CALL(update_liquid_detect_mode, touch_cdev->lpd_state);
 				break;
 
-		case TS_MMI_SET_GESTURES:
-			if (touch_cdev->touch_powered)
+		case TS_MMI_SET_GESTURES: {
+			bool powered = touch_cdev->touch_powered;
+
+			/* Display is on: new gestures are applied on next suspend */
+			if (!atomic_read(&touch_cdev->touch_stopped))
 				break;
 
-			ts_mmi_queued_power_on(touch_cdev);
+			/*
+			 * Doze sensors (double tap / udfps) are enabled by SystemUI only
+			 * after PRE_DISPLAY_OFF already stopped the touch, typically
+			 * before DISPLAY_OFF powers it down. Don't drop the request in
+			 * that window, otherwise IC stays in deep sleep and is powered off.
+			 */
+			if (!powered)
+				ts_mmi_queued_power_on(touch_cdev);
 			ts_mmi_queued_resume(touch_cdev);
 			ts_mmi_queued_stop(touch_cdev);
-			ts_mmi_queued_power_off(touch_cdev);
+			if (!powered)
+				ts_mmi_queued_power_off(touch_cdev);
 
 			break;
+		}
 
 		default:
 			dev_dbg(DEV_MMI, "%s: unknown command %d\n", __func__, cmd);
