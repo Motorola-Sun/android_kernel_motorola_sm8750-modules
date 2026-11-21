@@ -230,7 +230,9 @@ static int _ts_mmi_gesture_handler(struct gesture_event_data *gev,
 		input_report_abs(sensor_pdata->input_sensor_dev, ABS_X, gev->evdata.x);
 		input_report_abs(sensor_pdata->input_sensor_dev, ABS_Y, gev->evdata.y);
 		pr_info("%s: single tap; x=%d, y=%d\n", __func__, gev->evdata.x, gev->evdata.y);
-			break;
+		touch_cdev->single_tap_pressed = true;
+		sysfs_notify(&DEV_MMI->kobj, NULL, "single_tap_pressed");
+		break;
 	case 2:
 		if (!(mode_type & TS_MMI_GESTURE_ZERO))
 			return 1;
