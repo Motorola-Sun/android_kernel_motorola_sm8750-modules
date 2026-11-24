@@ -1074,6 +1074,13 @@ int ts_mmi_dev_register(struct device *parent,
 		goto CLASS_DEVICE_EDGE_ATTR_CREATE_FAILED;
 	}
 
+	/*
+	 * Attribute groups are added after device_create() has already sent
+	 * KOBJ_ADD, so ueventd may miss them. Send KOBJ_CHANGE to let it apply
+	 * sysfs permissions to the attributes created above.
+	 */
+	kobject_uevent(&DEV_MMI->kobj, KOBJ_CHANGE);
+
 	ret = ts_mmi_panel_register(touch_cdev);
 	if (ret < 0) {
 		dev_err(DEV_TS, "%s: Register panel failed. %d\n",
